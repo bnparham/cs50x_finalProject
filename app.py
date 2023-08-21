@@ -25,7 +25,7 @@ Session(app)
 db = SQL("sqlite:///finance.db")
 
 OFFSET = {'offset' : 0}
-POST_ID = {'post_id' : 1}
+POST_ID = {}
 
 @app.after_request
 def after_request(response):
@@ -47,7 +47,7 @@ def comments_view():
         POST_ID['post_id'] = request.form.get("post_id")
         return redirect("/")
     else:
-        post_id = POST_ID['post_id']
+        post_id = POST_ID.get('post_id',db.execute("SELECT id from posts ORDER BY date DESC LIMIT 1")[0]['id'])
         get_comments = db.execute(
                 """
                 SELECT comments.*,users.username,posts.title FROM comments 
@@ -95,7 +95,7 @@ def posts():
                     SELECT posts.*,users.username FROM posts 
                     LEFT JOIN users
                     ON posts.author = users.id
-                    ORDER BY date
+                    ORDER BY date DESC
                     LIMIT 3
                     OFFSET ?
                     """,offset)
