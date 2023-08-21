@@ -21,3 +21,14 @@ fetch(register_url)
 .then((html) => {
   registerModal.innerHTML = html     
 });
+
+// add new post --->
+const add_new_post_Modal = document.querySelector("#addNewPostModal .modal-body")
+const add_new_post_url = "/add-new-post"
+fetch(add_new_post_url)
+.then((response) => {
+  return response.text();
+})
+.then((html) => {
+  add_new_post_Modal.innerHTML = html     
+});

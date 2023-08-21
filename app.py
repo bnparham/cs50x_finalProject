@@ -7,6 +7,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required, lookup, usd
 
+from time import gmtime, strftime
+
 # Configure application
 app = Flask(__name__)
 
@@ -39,8 +41,35 @@ def after_request(response):
 @app.route("/")
 def index():
     """Show portfolio of stocks"""
-    return render_template('home.html')
+    alert_new_post = session.get("alert_new_post", None)
+    session['alert_new_post'] = None
+    return render_template('home.html', alert_new_post=alert_new_post)
 
+@app.route("/add-new-post", methods=["GET", "POST"])
+@login_required
+def add_new_post_view():
+    if request.method == "POST":
+        title = request.form.get("title")
+        img = request.form.get("img")
+        content = request.form.get("content")
+        author = session["user_id"]
+        date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        
+        if not title:
+            return apology("must provide title", 400)
+        elif not img:
+            return apology("must provide img", 400)
+        elif not content:
+            return apology("must provide content", 400) 
+        db.execute("INSERT INTO posts (author,title,img,content,date) VALUES (?,?,?,?,?);",author,title,img,content,date)
+        
+        session['alert_new_post'] = True
+        
+        return redirect("/")
+    else:
+        return render_template('addNewPost.html')
+    
+    
 @app.route("/comments", methods=["GET", "POST"])
 def comments_view():
     if request.method == "POST":
@@ -69,7 +98,7 @@ def comments_view():
         return render_template("comments.html", comments=get_comments,post_title = get_post_title)
 
 @app.route("/posts", methods=["GET", "POST"])
-def posts():
+def posts_view():
     if request.method == "POST":
         offset = request.form.get("offset")
         OFFSET['offset'] = OFFSET.get('offset') + int(offset)
