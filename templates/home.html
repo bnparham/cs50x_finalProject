@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    
+    <div class="container">
+        <div class="row">
+            <!-- last posts -->
+            <div class="col-md-6">
+                <div id="post-section" class="row">
+                    ...
+                </div>
+                <!-- pagination -->
+                <form id="form_post" action="/posts" method="post">
+                    <input type="hidden" value=0 name="offset" id="offset"/>
+                    <button class="btn btn-outline-info" onclick=pervious_page() type="button">Pervious Page</button>
+                    <button class="btn btn-outline-info" onclick=next_page() type="button">Next Page</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                hi
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="../static/js/posts.js"></script>
+{% endblock %}

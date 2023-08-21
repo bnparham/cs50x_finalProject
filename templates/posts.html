@@ -1,0 +1,22 @@
+{% for p in posts %}
+<div class="card mb-3" style="max-width: 740px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{p['img']}}" class="img-fluid rounded-start" alt="{{p['title']}}">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{p['title']}}</h5>
+          <p class="card-text">{{p['content']}}</p>
+        </div>
+        <p class="card-text">
+            <small class="text-body-secondary">Author : {{p['username']}} | </small>
+            <small class="text-body-secondary">Date : {{p['date']}}</small>
+        </p>
+      </div>
+    </div>
+</div>
+{% endfor %}
+<ul class="pagination mb-3 justify-content-center">
+    <li class="page-item">Page : {{pagination}}</li>
+</ul>
