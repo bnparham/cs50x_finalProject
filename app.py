@@ -59,9 +59,14 @@ def comments_view():
                 """,
                 post_id
         )
-        print(post_id)
-        print(get_comments)
-        return render_template("comments.html", comments=get_comments)
+
+        get_post_title = db.execute("""
+                SELECT title
+                FROM posts
+                WHERE id = ?;   
+                """,post_id)[0]['title']
+
+        return render_template("comments.html", comments=get_comments,post_title = get_post_title)
 
 @app.route("/posts", methods=["GET", "POST"])
 def posts():

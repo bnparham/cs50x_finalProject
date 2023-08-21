@@ -3,12 +3,28 @@
       Comments
     </div>
     <div class="card-body text-start">
-      <h5 class="card-title">Comments About Spider Man</h5>
-      {% for c in comments %}
+      <h5 class="card-title">Comments About {{post_title}}</h5>
+        {% if not comments %}
+        <div class="alert alert-info" role="alert">
+            Not Comment Yet !
+            {% if session["user_id"] %}
+                Add New Comment Now!
+            {% endif %}
+            {% if not session["user_id"] %}
+                Please Login To add New Comment !
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% for c in comments %}
         <p class="alert alert-light">
             {{c['username']}} : {{c['comment']}}
         </p>
-      {% endfor %}
-      <a href="#" class="btn btn-success">Add New Comment</a>
+        {% endfor %}
+        
+        {% if session["user_id"] %}
+            <a href="#" class="btn btn-success">Add New Comment</a>
+        {% endif %}
+      
     </div>
   </div>
