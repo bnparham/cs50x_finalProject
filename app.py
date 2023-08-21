@@ -25,6 +25,7 @@ Session(app)
 db = SQL("sqlite:///finance.db")
 
 OFFSET = {'offset' : 0}
+POST_ID = {'post_id' : 1}
 
 @app.after_request
 def after_request(response):
@@ -39,6 +40,28 @@ def after_request(response):
 def index():
     """Show portfolio of stocks"""
     return render_template('home.html')
+
+@app.route("/comments", methods=["GET", "POST"])
+def comments_view():
+    if request.method == "POST":
+        POST_ID['post_id'] = request.form.get("post_id")
+        return redirect("/")
+    else:
+        post_id = POST_ID['post_id']
+        get_comments = db.execute(
+                """
+                SELECT comments.*,users.username,posts.title FROM comments 
+                LEFT JOIN users
+                ON comments.user_id = users.id
+                LEFT JOIN posts
+                ON comments.post_id = posts.id
+                WHERE post_id = ?;
+                """,
+                post_id
+        )
+        print(post_id)
+        print(get_comments)
+        return render_template("comments.html", comments=get_comments)
 
 @app.route("/posts", methods=["GET", "POST"])
 def posts():

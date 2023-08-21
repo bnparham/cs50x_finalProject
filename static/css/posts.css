@@ -1,6 +1,10 @@
 #post-section img{
     height: 100%;
+    max-height: 219px;
 }
 #post-section .card{
     padding: 0;
+}
+#post-section{
+    cursor: pointer;
 }

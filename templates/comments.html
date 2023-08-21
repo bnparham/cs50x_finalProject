@@ -1,0 +1,14 @@
+<div class="card p-0">
+    <div class="card-header">
+      Comments
+    </div>
+    <div class="card-body text-start">
+      <h5 class="card-title">Comments About Spider Man</h5>
+      {% for c in comments %}
+        <p class="alert alert-light">
+            {{c['username']}} : {{c['comment']}}
+        </p>
+      {% endfor %}
+      <a href="#" class="btn btn-success">Add New Comment</a>
+    </div>
+  </div>
