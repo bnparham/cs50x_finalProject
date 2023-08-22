@@ -49,14 +49,17 @@ def index():
         username = db.execute("SELECT username FROM users where id = ?",user_id)[0]['username']
     return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id,username=username)
 
+
+
 @app.route("/edit-posts", methods=["GET"])
 @login_required
 def edit_post_view():
     get_posts = db.execute(
         """
         SELECT id,title FROM posts
+        WHERE author = ?
         ORDER BY date DESC
-        """
+        """,session['user_id']
     )
     return render_template('edit-posts-list.html',posts=get_posts)
     
@@ -80,6 +83,20 @@ def edit_post_form():
         return redirect ('/')
     else:
         return render_template("edit-post-form.html")
+    
+    
+@app.route("/remove-post", methods=["GET", "POST"])
+@login_required
+def remove_post():
+    if request.method == "POST":
+        delete_post_id = request.form.get("delete_post_id")
+        # remove comment
+        db.execute("DELETE FROM comments WHERE post_id = ?",delete_post_id)
+        # remove post
+        db.execute("DELETE FROM posts WHERE id = ?",delete_post_id)
+        return redirect("/")
+    else:
+        return render_template("remove-post.html")
 
 @app.route("/add-new-post", methods=["GET", "POST"])
 @login_required
