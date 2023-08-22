@@ -1,3 +1,5 @@
+
+
 const postSection = document.querySelector("#post-section")
 const posts_url = "/posts"
 fetch(posts_url)
@@ -48,4 +50,40 @@ const myFunction = () => {
 
 const intervalId = setTimeout(myFunction, 500);
 
-// -------------------
+
+
+//--- Edit Post ---
+
+const edit_post = (e) => {
+
+    
+    const edit_post_form = e.parentNode;
+    const post_edit_id = edit_post_form.querySelector("[name='post_edit_id']").getAttribute("value")
+
+    // get all posts from api
+    fetch('/posts_api')
+    .then(response => response.json())
+    .then(data => {
+      // find post
+      find_post = data.filter(p => p.id == post_edit_id)
+      console.log(find_post);
+
+      const edit_posts_Modal = document.querySelector("#editPostModel .modal-body")
+      const edit_posts_url = "/edit-post-form"
+      
+      
+
+      fetch(edit_posts_url)
+      .then((response) => {
+        return response.text();
+      })
+      .then((html) => {
+        edit_posts_Modal.innerHTML = html     
+      });
+
+    })
+
+    
+
+
+}

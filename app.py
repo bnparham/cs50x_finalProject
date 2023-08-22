@@ -1,7 +1,7 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session,jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -46,13 +46,24 @@ def index():
     user_id = session.get('user_id',None)
     return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id)
 
-@app.route("/edit-posts", methods=["GET", "POST"])
+@app.route("/edit-posts", methods=["GET"])
 @login_required
 def edit_post_view():
+    get_posts = db.execute(
+        """
+        SELECT id,title FROM posts
+        """
+    )
+    return render_template('edit-posts-list.html',posts=get_posts)
+    
+
+@app.route("/edit-post-form", methods=["GET", "POST"])
+@login_required
+def edit_post_form():
     if request.method == "POST":
         return apology()
     else:
-        return render_template('edit-posts.html')
+        return render_template("edit-post-form.html")
 
 @app.route("/add-new-post", methods=["GET", "POST"])
 @login_required
@@ -224,3 +235,14 @@ def register():
             return redirect('/')
         return render_template("register.html")
 
+
+# --- api ---
+@app.route('/posts_api', methods=["GET"])
+def post_api():
+    get_posts = db.execute("""
+            SELECT posts.*,users.username FROM posts 
+            LEFT JOIN users
+            ON posts.author = users.id
+            ORDER BY date DESC
+            """)
+    return jsonify(get_posts)

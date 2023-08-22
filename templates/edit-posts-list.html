@@ -1,0 +1,16 @@
+{% block main %}
+<ul class="list-group">
+    {% for p in posts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <p>{{p['title']}}</p>
+            <form id="edit_post_form" action="/edit-posts" method="post">
+                <input type="hidden" value="{{p['id']}}" name="post_edit_id"/>
+                <button type="button" onclick=edit_post(this) class="btn btn-danger">
+                    <i class="fa fa-edit" style="font-size:15px"></i>
+                    Edit
+                </button>
+            </form>
+        </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
