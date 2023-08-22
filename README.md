@@ -1,6 +1,7 @@
 # ParhamBN Blog Project
 
 ## CS50x 2023 Final Project
+youtube link : https://youtu.be/QLCtek9yYp4
 
 This project is built using Flask for the server-side logic and utilizes JavaScript, CSS, and HTML for the client-side interface and interactivity.
 
