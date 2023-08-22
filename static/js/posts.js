@@ -56,7 +56,7 @@ const intervalId = setTimeout(myFunction, 500);
 
 const edit_post = (e) => {
 
-    
+
     const edit_post_form = e.parentNode;
     const post_edit_id = edit_post_form.querySelector("[name='post_edit_id']").getAttribute("value")
 
@@ -65,12 +65,10 @@ const edit_post = (e) => {
     .then(response => response.json())
     .then(data => {
       // find post
-      find_post = data.filter(p => p.id == post_edit_id)
-      console.log(find_post);
+      find_post = data.filter(p => p.id == post_edit_id)[0]
 
       const edit_posts_Modal = document.querySelector("#editPostModel .modal-body")
       const edit_posts_url = "/edit-post-form"
-      
       
 
       fetch(edit_posts_url)
@@ -78,7 +76,21 @@ const edit_post = (e) => {
         return response.text();
       })
       .then((html) => {
+        // console.log(html);
         edit_posts_Modal.innerHTML = html     
+        const edit_title = edit_posts_Modal.querySelector("#edit-title")
+        const edit_img = edit_posts_Modal.querySelector("#edit-img")
+        const edit_content = edit_posts_Modal.querySelector("#edit-content")
+        const edit_post_id = edit_posts_Modal.querySelector("#edit-post-id") 
+
+        // fill input with data 
+        edit_title.value = find_post['title']
+        edit_img.value = find_post['img']
+        edit_content.value = find_post['content']
+        edit_post_id.value = find_post['id']
+
+        edit_post_form = document.querySelector("#edit_post_form")
+        edit_post_form.submit()
       });
 
     })

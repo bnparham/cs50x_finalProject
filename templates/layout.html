@@ -80,7 +80,12 @@
 
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                            <li class="nav-item me-3 d-flex align-items-center"><a class="btn btn-danger" href="/logout">Log Out</a></li>
+                            {% if session["user_id"] %}
+                            <li class="nav-item">
+                                <p class="alert alert-light">Hello {{username}}</p>
+                            </li>
+                            {% endif %}
                         </ul>
                     {% else %}
                         <ul class="navbar-nav ms-auto mt-2">

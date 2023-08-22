@@ -1,14 +1,15 @@
 {% block main %}
-    <form action="/add-new-post" method="post">
+    <form id="edit_post_form" action="/edit-post-form" method="post">
         <div class="mb-3">
-            <input required autocomplete="off" autofocus class="form-control mx-auto w-100" id="title" name="title" placeholder="title" type="text">
+            <input required autocomplete="off" autofocus class="form-control mx-auto w-100" id="edit-title" name="edit-title" placeholder="title" type="text">
         </div>
         <div class="mb-3">
-            <input required class="form-control mx-auto w-100" id="img" name="img" placeholder="img URL" type="url">
+            <input id="edit-img" required class="form-control mx-auto w-100" name="edit-img" placeholder="img URL" type="url">
         </div>
         <div class="mb-3">
-            <input required class="form-control mx-auto w-100" id="content" name="content" placeholder="content" type="text">
+            <input id="edit-content" required class="form-control mx-auto w-100" name="edit-content" placeholder="content" type="text">
         </div>
-        <button class="btn btn-outline-success" type="submit">Add New Post</button>
+        <input type="hidden" value="0" name="edit-post-id" id="edit-post-id"/>
+        <button class="btn btn-outline-success" type="submit">Edit Post</button>
     </form>
 {% endblock %}

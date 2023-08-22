@@ -44,7 +44,10 @@ def index():
     alert_new_post = session.get("alert_new_post", None)
     session['alert_new_post'] = None
     user_id = session.get('user_id',None)
-    return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id)
+    username = None
+    if (user_id):
+        username = db.execute("SELECT username FROM users where id = ?",user_id)[0]['username']
+    return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id,username=username)
 
 @app.route("/edit-posts", methods=["GET"])
 @login_required
@@ -52,6 +55,7 @@ def edit_post_view():
     get_posts = db.execute(
         """
         SELECT id,title FROM posts
+        ORDER BY date DESC
         """
     )
     return render_template('edit-posts-list.html',posts=get_posts)
@@ -61,7 +65,19 @@ def edit_post_view():
 @login_required
 def edit_post_form():
     if request.method == "POST":
-        return apology()
+        edit_title = request.form.get("edit-title")
+        edit_img = request.form.get("edit-img")
+        edit_content = request.form.get("edit-content")
+        edit_post_id = request.form.get("edit-post-id")
+        edit_data = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        edit_author = session.get('user_id')
+        db.execute("""
+                    UPDATE posts
+                    SET author = ? ,title = ? , img = ?, content = ?, date = ?
+                    WHERE id = ?;
+                    """,edit_author,edit_title,edit_img,edit_content,edit_data,edit_post_id)
+        
+        return redirect ('/')
     else:
         return render_template("edit-post-form.html")
 
