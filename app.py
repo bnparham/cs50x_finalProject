@@ -182,6 +182,7 @@ def posts_view():
             q = len_posts
             while (q % 3 != 0):
                 q  = q - 1
+            if(q == len_posts) : q = q - 3
             OFFSET['offset'] = q
             offset = OFFSET['offset']
         pagination = offset // 3 + 1
@@ -195,13 +196,6 @@ def posts_view():
                     OFFSET ?
                     """,offset)
         return render_template('posts.html', posts=get_posts, pagination=pagination)
-
-# @app.route("/buy", methods=["GET", "POST"])
-# @login_required
-# def buy():
-#     """Buy shares of stock"""
-#     return apology("TODO")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
