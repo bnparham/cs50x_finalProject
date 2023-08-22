@@ -3,6 +3,7 @@
       Comments
     </div>
     <div class="card-body text-start">
+        <input type="hidden" value="{{post_id}}" name="post_id"/>
       <h5 class="card-title">Comments About {{post_title}}</h5>
         {% if not comments %}
         <div class="alert alert-info" role="alert">
@@ -23,8 +24,23 @@
         {% endfor %}
         
         {% if session["user_id"] %}
-            <a href="#" class="btn btn-success">Add New Comment</a>
+        <button onclick=addNewComment(this) type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNewCommentModal">
+            Add New Comment
+        </button>
+        <!-- add new comment Modal -->
+        <div class="modal fade" id="addNewCommentModal" tabindex="-1" aria-labelledby="addNewCommentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addNewCommentModalLabel">Add new Comment</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
+            </div>
+        </div>
         {% endif %}
-      
     </div>
   </div>

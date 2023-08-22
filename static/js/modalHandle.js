@@ -65,7 +65,7 @@ if (user_id_session != "None"){
 }
 
 
-// edit posts
+// edit post list view
 if (user_id_session != "None"){
 
   const edit_post = document.getElementById("edit_post_nav")
@@ -85,5 +85,48 @@ if (user_id_session != "None"){
     }  
 
   })
-  
+}
+
+
+
+// add new comment 
+if (user_id_session != "None")
+{
+  function addNewComment (e) {
+    // get post_id
+    const parentEelement = e.parentNode;
+    const post_id = parentEelement.querySelector("[name='post_id']").getAttribute("value")
+    const addNewCommentModal = document.querySelector("#addNewCommentModal .modal-body")
+    const addNewComment_url = "/add-new-comment"
+    fetch(addNewComment_url)
+    .then((response) => {
+      return response.text();
+    })
+    .then((html) => {
+      addNewCommentModal.innerHTML = html
+
+    // get all posts from api
+    fetch('/posts_api')
+    .then(response => response.json())
+    .then(data => {
+      // find post
+      find_post = data.filter(p => p.id == post_id)[0]
+      post_title = find_post['title']
+      const modalTitle = document.querySelector("#addNewCommentModal #addNewCommentModalLabel")
+      modalTitle.innerHTML = `Add New Comment For ${post_title}`
+    })
+
+      const hidden_input = addNewCommentModal.querySelector("[name='post_id']")
+      hidden_input.value = post_id
+      const newComment_form = addNewCommentModal.querySelector('form')
+      const submit_comment = addNewCommentModal.querySelector("#submit_comment")
+      // if click on add new comment btn then send form to /add-new-comment
+      submit_comment.addEventListener('click', function(){
+        newComment_form.submit()
+      })
+
+    });
+
+
+  }
 }

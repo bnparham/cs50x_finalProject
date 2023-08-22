@@ -107,6 +107,18 @@ def add_new_post_view():
         return render_template('addNewPost.html')
     
     
+@app.route("/add-new-comment", methods=["GET", "POST"])    
+def add_new_comment_form():
+    if request.method == "POST":
+        comment = request.form.get("comment")
+        post_id = request.form.get("post_id")
+        user_id = session['user_id']
+        date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        db.execute("INSERT INTO comments (user_id,post_id,comment,date) VALUES (?,?,?,?)",user_id,post_id,comment,date)
+        return redirect("/")
+    else:
+        return render_template("addNewComment.html")
+    
 @app.route("/comments", methods=["GET", "POST"])
 def comments_view():
     if request.method == "POST":
@@ -116,7 +128,7 @@ def comments_view():
         post_id = POST_ID.get('post_id',db.execute("SELECT id from posts ORDER BY date DESC LIMIT 1")[0]['id'])
         get_comments = db.execute(
                 """
-                SELECT comments.*,users.username,posts.title FROM comments 
+                SELECT comments.*,users.username FROM comments 
                 LEFT JOIN users
                 ON comments.user_id = users.id
                 LEFT JOIN posts
@@ -132,7 +144,7 @@ def comments_view():
                 WHERE id = ?;   
                 """,post_id)[0]['title']
 
-        return render_template("comments.html", comments=get_comments,post_title = get_post_title)
+        return render_template("comments.html", comments=get_comments,post_title = get_post_title,post_id=post_id)
 
 @app.route("/posts", methods=["GET", "POST"])
 def posts_view():
