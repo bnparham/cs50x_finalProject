@@ -11,11 +11,15 @@
             <div class="col-md-6">
                 <!-- last posts -->
                 <h2>Newest Post</h2>
-                {% if alert_new_post%}
+                {% if alert_new_post %}
                 <div class="alert alert-success" role="alert">
-                    New Post is Added !
+                    New Post is Add !
                 </div>
-
+                {% endif %}
+                {% if alert_update_post %}
+                <div class="alert alert-info" role="alert">
+                    Post is Update !
+                </div>
                 {% endif %}
                 <div id="post-section" class="row">
                     ...

@@ -24,7 +24,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL("sqlite:///databse.db")
 
 OFFSET = {'offset' : 0}
 POST_ID = {}
@@ -42,12 +42,14 @@ def after_request(response):
 def index():
     """Show portfolio of stocks"""
     alert_new_post = session.get("alert_new_post", None)
+    alert_update_post = session.get("alert_update_post", None)
+    session['alert_update_post'] = None
     session['alert_new_post'] = None
     user_id = session.get('user_id',None)
     username = None
     if (user_id):
         username = db.execute("SELECT username FROM users where id = ?",user_id)[0]['username']
-    return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id,username=username)
+    return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id,username=username,alert_update_post=alert_update_post)
 
 
 
@@ -79,7 +81,8 @@ def edit_post_form():
                     SET author = ? ,title = ? , img = ?, content = ?, date = ?
                     WHERE id = ?;
                     """,edit_author,edit_title,edit_img,edit_content,edit_data,edit_post_id)
-        
+        session['alert_update_post'] = True
+        OFFSET['offset'] = 0
         return redirect ('/')
     else:
         return render_template("edit-post-form.html")
