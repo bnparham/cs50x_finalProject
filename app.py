@@ -100,6 +100,7 @@ def add_new_post_view():
         db.execute("INSERT INTO posts (author,title,img,content,date) VALUES (?,?,?,?,?);",author,title,img,content,date)
         
         session['alert_new_post'] = True
+        OFFSET['offset'] = 0
         
         return redirect("/")
     else:
