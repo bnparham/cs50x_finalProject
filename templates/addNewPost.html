@@ -1,13 +1,13 @@
 {% block main %}
     <form action="/add-new-post" method="post">
         <div class="mb-3">
-            <input required autocomplete="off" autofocus class="form-control mx-auto w-100" id="title" name="title" placeholder="title" type="text">
+            <input autocomplete="off" required autocomplete="off" autofocus class="form-control mx-auto w-100" id="title" name="title" placeholder="title" type="text">
         </div>
         <div class="mb-3">
-            <input required class="form-control mx-auto w-100" id="img" name="img" placeholder="img URL" type="url">
+            <input autocomplete="off" required class="form-control mx-auto w-100" id="img" name="img" placeholder="img URL" type="url">
         </div>
         <div class="mb-3">
-            <input required class="form-control mx-auto w-100" id="content" name="content" placeholder="content" type="text">
+            <input autocomplete="off" required class="form-control mx-auto w-100" id="content" name="content" placeholder="content" type="text">
         </div>
         <button class="btn btn-outline-success" type="submit">Add New Post</button>
     </form>
