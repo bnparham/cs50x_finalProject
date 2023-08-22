@@ -9,13 +9,13 @@
           <h5 class="card-title">{{p['title']}}</h5>
           <p class="card-text">{{p['content']}}</p>
           <form action="/comments" method="post">
-            <input name="post_id" value="0" type="hidden"/>
+            <input class="hidden-post_id-input" name="post_id" value="0" type="hidden"/>
           </form>
+          <p class="card-text">
+              <small class="text-body-secondary">Author : {{p['username']}} | </small>
+              <small class="text-body-secondary">Date : {{p['date']}}</small>
+          </p>
         </div>
-        <p class="card-text">
-            <small class="text-body-secondary">Author : {{p['username']}} | </small>
-            <small class="text-body-secondary">Date : {{p['date']}}</small>
-        </p>
       </div>
     </div>
 </div>

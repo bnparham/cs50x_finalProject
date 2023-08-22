@@ -43,7 +43,16 @@ def index():
     """Show portfolio of stocks"""
     alert_new_post = session.get("alert_new_post", None)
     session['alert_new_post'] = None
-    return render_template('home.html', alert_new_post=alert_new_post)
+    user_id = session.get('user_id',None)
+    return render_template('home.html', alert_new_post=alert_new_post,user_id=user_id)
+
+@app.route("/edit-posts", methods=["GET", "POST"])
+@login_required
+def edit_post_view():
+    if request.method == "POST":
+        return apology()
+    else:
+        return render_template('edit-posts.html')
 
 @app.route("/add-new-post", methods=["GET", "POST"])
 @login_required

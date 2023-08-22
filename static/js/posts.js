@@ -30,18 +30,15 @@ const pervious_page = () => {
 const myFunction = () => {
 
   // send post id to /comments 
-
   const posts = document.querySelectorAll("#post-section .card")
-
   posts.forEach(post => {
     post.addEventListener('click', function() {
       // give post id
       post_id = post.getAttribute("post_id")
 
       // find hidden input inside each post
-      const hiddenValue = document.querySelector("#post-section .card input")
+      const hiddenValue = document.querySelector("#post-section .card input.hidden-post_id-input")
       hiddenValue.value = post_id
-
       // find form
       const post_form = document.querySelector("#post-section .card form")
       post_form.submit()
@@ -50,3 +47,5 @@ const myFunction = () => {
 }
 
 const intervalId = setTimeout(myFunction, 500);
+
+// -------------------

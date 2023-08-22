@@ -8,7 +8,6 @@
     
     <div class="container">
         <div class="row">
-            
             <div class="col-md-6">
                 <!-- last posts -->
                 <h2>Newest Post</h2>
@@ -38,6 +37,10 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block footer %}
+    <input type="hidden" value="{{user_id}}" name="user_id_session" id="user_id_session" />
 {% endblock %}
 
 {% block script %}
