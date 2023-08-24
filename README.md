@@ -5,6 +5,46 @@ youtube link : https://youtu.be/QLCtek9yYp4
 
 This project is built using Flask for the server-side logic and utilizes JavaScript, CSS, and HTML for the client-side interface and interactivity.
 
+
+# Requiments
+
+**1 - Installing pipenv**
+
+**Pipenv** is a Python virtualenv management tool that supports a multitude of systems and nicely bridges the gaps between pip, python (using system python, pyenv or asdf) and virtualenv. _Linux, macOS, and Windows are all first-class citizens in pipenv._
+
+Pipenv automatically creates and manages a virtualenv for your projects, as well as adds/removes packages from your `Pipfile` as you install/uninstall packages. It also generates a project `Pipfile.lock`, which is used to produce deterministic builds.
+
+**Pipenv can be installed with Python 3.7 and above.**
+
+For most users, we recommend installing Pipenv using `pip`:
+
+```
+pip install --user pipenv
+```
+
+For additional installation methods and more information about Pipenv, please refer to the [package documentation](https://pypi.org/project/pipenv/).
+
+**2 - Installing project dependencies**
+
+To install the required packages for this project, navigate to the project directory in the terminal and enter the command :
+
+```
+pipenv install
+```
+
+This command will automatically install the packages specified in the `Pipfile` file.
+
+**3 - Setting up and Running the Project**
+
+Before using the project, activate the virtual environment by running :
+
+```
+pipenv shell
+```
+
+in the project directory. Once the virtual environment is active, you can proceed to execute other commands, such as `flask --debug run`, to run the server.
+
+
 ## Features
 
 - **Login and Register as Modals**: The project incorporates a seamless user experience by opening the login and registration pages as modal pop-ups. JavaScript handles this functionality, dynamically fetching the HTML content of these pages and injecting them into the modals for a smooth and user-friendly interface.
